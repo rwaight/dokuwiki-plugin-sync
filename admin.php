@@ -363,10 +363,13 @@ class admin_plugin_sync extends DokuWiki_Admin_Plugin {
             return array();
         }
         $data = $this->client->getResponse();
-        foreach((array) $data['lockfail'] as $id){
-            $this->_listOut($this->getLang('lockfail').' '.hsc($id),'error');
-            unset($synclist[$id]);
-        }
+        // allow read-only access to the remote wiki
+        // the below code causes sync to fail when the remote
+        // user only has read access to the remote wiki
+        // foreach((array) $data['lockfail'] as $id){
+        //     $this->_listOut($this->getLang('lockfail').' '.hsc($id),'error');
+        //     unset($synclist[$id]);
+        // }
 
         return $lock;
     }
